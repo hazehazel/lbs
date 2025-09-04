@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LBS</title>
+        <link rel="stylesheet" href="./css/style.min.css" />
+        <script src="./data.min.js"></script>
+        <script src="./script.min.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="loader-wrap">
+                <div class="loader"></div>
+            </div>
+
+            <div class="wrap col">
+                <h1>ROLL20 로그 변환기</h1>
+                <b>유의사항</b>
+                <p>
+                    * PC 및 브라우저 사양에 따라 딜레이가 생길 수 있습니다.<br />
+                    * 문제 발견 시 알려주세요.<br />
+                    * 페이지 링크를 공유하지 마세요.
+                </p>
+            </div>
+
+            <div class="wrap col">
+                <h2>1. 로그 업로드</h2>
+                <div>Chat Archive 페이지에서 개발자도구(F12)를 연 뒤, 'textchatcontainer'를 모두 복사해서 붙여넣습니다.</div>
+
+                <textarea id="log" placeholder="Chat Archive의 'textchatcontainer'를 모두 복사해서 붙여넣습니다."></textarea>
+            </div>
+
+            <div class="wrap col">
+                <h2>2. 옵션(선택)</h2>
+
+                <div class="wrap row">
+                    <label for="option_more">
+                        <input type="checkbox" id="option_more" checked />
+                        더보기/접기 추가(티스토리용)
+                    </label>
+                    <label for="option_myself">
+                        <input type="checkbox" id="option_myself" checked />
+                        내 말하기 색상 제거
+                    </label>
+                    <label for="option_underline">
+                        <input type="checkbox" id="option_underline" checked />
+                        spacer 제거
+                    </label>
+                </div>
+            </div>
+
+            <div class="wrap col rule">
+                <h2>3. 룰(선택)</h2>
+
+                <div class="wrap row">
+                    <label for="rule_none">
+                        <input type="radio" name="rule" id="rule_none" value="" checked />
+                        없음
+                    </label>
+                    <label for="rule_coc">
+                        <input type="radio" name="rule" id="rule_coc" value="coc" />
+                        COC
+                    </label>
+                    <label for="rule_insane">
+                        <input type="radio" name="rule" id="rule_insane" value="insane" />
+                        inSANe
+                    </label>
+                    <label for="rule_magica_logia">
+                        <input type="radio" name="rule" id="rule_magica_logia" value="magicalogia" />
+                        마기로기
+                    </label>
+                    <label for="rule_dx3rd">
+                        <input type="radio" name="rule" id="rule_dx3rd" value="dx3rd" />
+                        더블크로스
+                    </label>
+                </div>
+            </div>
+
+            <div class="wrap col">
+                <h2>4. 커스텀 CSS 추가(선택)</h2>
+
+                <textarea id="custom_css" placeholder="커스텀 CSS가 필요하다면 추가하세요. 선택자 상위에 'textchatcontainer'를 추가하는 것을 추천합니다."></textarea>
+            </div>
+
+            <button type="button" id="btn_submit" class="btn" disabled>5. 변환</button>
+
+            <div class="wrap col">
+                <h2>6. 로그 수정</h2>
+
+                <div class="wrap col">
+                    <div id="result_preview_style" style="font-size: 0; width: 0; height: 0"></div>
+                    <div id="result_preview" contenteditable="true">먼저 로그를 변환해주세요.</div>
+                </div>
+
+                <label for="option_split">
+                    <input type="checkbox" id="option_split" />
+                    2페이지로 분리 (필요 시 체크)
+                </label>
+
+                <button type="button" id="btn_submit_re" class="btn" disabled>7. 재변환</button>
+            </div>
+
+            <div class="wrap col">
+                <h2>8. 로그 복사</h2>
+
+                <div class="wrap col">
+                    <textarea id="result"></textarea>
+                    <button type="button" id="btn_copy_result" class="btn btn-copy" disabled>8. 복사 <span></span></button>
+                </div>
+
+                <div id="sub_result" class="wrap col">
+                    <textarea id="result2"></textarea>
+                    <button type="button" id="btn_copy_result2" class="btn btn-copy" disabled>8. 2페이지 복사 <span></span></button>
+                </div>
+            </div>
+
+            <button type="button" id="btn_hide" class="btn hide">hide</button>
+        </div>
+    </body>
+</html>
