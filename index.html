@@ -1,43 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>LBS</title>
-        <link rel="stylesheet" href="./css/style.min.css" />
+        <meta name="description" content="Roll20 Chat Archive 로그를 티스토리·개인 홈페이지에 업로드 가능한 형태로 변환합니다." />
+        <title>LBS - Roll20 로그 변환기</title>
+        <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+        <link rel="shortcut icon" href="./favicon.svg" />
+        <link rel="stylesheet" href="./style.min.css" />
         <script src="./data.min.js"></script>
-        <script src="./script.min.js"></script>
+        <script src="./script.min.js" defer></script>
     </head>
     <body>
         <div class="wrapper">
+
+            <!-- 로딩 -->
             <div class="loader-wrap">
                 <div class="loader"></div>
+                <span class="loader-text">변환 중…</span>
             </div>
 
-            <div class="wrap col">
-                <h1>ROLL20 로그 변환기</h1>
-                <b>유의사항</b>
-                <p>
-                    * PC 및 브라우저 사양에 따라 딜레이가 생길 수 있습니다.<br />
-                    * 문제 발견 시 알려주세요.<br />
-                    * 페이지 링크를 공유하지 마세요.
+            <!-- 헤더 -->
+            <div class="header-area">
+                <h1>ROLL20 로그 변환기 <span>LBS</span></h1>
+                <div class="notice-box">
+                    <p>* PC 및 브라우저 사양에 따라 딜레이가 생길 수 있습니다.</p>
+                    <p>* 문제 발견 시 알려주세요.</p>
+                    <p>* 페이지 링크를 공유하지 마세요.</p>
+                </div>
+            </div>
+
+            <!-- 1. 로그 업로드 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="step-badge">1</span>
+                    <h2>로그 업로드</h2>
+                </div>
+                <p class="card-desc">
+                    Chat Archive 페이지에서 개발자도구(F12)를 열고,
+                    <code>'textchatcontainer'</code> 요소를 모두 복사해서 붙여넣습니다.
                 </p>
+                <div class="wrap col" style="gap:6px;">
+                    <textarea id="log" placeholder="Chat Archive의 'textchatcontainer'를 모두 복사해서 붙여넣습니다."></textarea>
+                    <div class="textarea-meta">
+                        <span id="log_count">0 글자</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="wrap col">
-                <h2>1. 로그 업로드</h2>
-                <div>Chat Archive 페이지에서 개발자도구(F12)를 연 뒤, 'textchatcontainer'를 모두 복사해서 붙여넣습니다.</div>
-
-                <textarea id="log" placeholder="Chat Archive의 'textchatcontainer'를 모두 복사해서 붙여넣습니다."></textarea>
-            </div>
-
-            <div class="wrap col">
-                <h2>2. 옵션(선택)</h2>
-
-                <div class="wrap row">
+            <!-- 2. 옵션 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="step-badge">2</span>
+                    <h2>옵션 <small style="font-size:1.2rem;font-weight:400;color:var(--text-muted)">(선택)</small></h2>
+                </div>
+                <div class="option-group">
                     <label for="option_more">
                         <input type="checkbox" id="option_more" checked />
-                        더보기/접기 추가(티스토리용)
+                        더보기/접기 추가 <span style="font-size:1.1rem;color:var(--text-muted)">(티스토리용)</span>
                     </label>
                     <label for="option_myself">
                         <input type="checkbox" id="option_myself" checked />
@@ -50,10 +70,13 @@
                 </div>
             </div>
 
-            <div class="wrap col rule">
-                <h2>3. 룰(선택)</h2>
-
-                <div class="wrap row">
+            <!-- 3. 룰 -->
+            <div class="card wrap rule">
+                <div class="card-header">
+                    <span class="step-badge">3</span>
+                    <h2>룰 <small style="font-size:1.2rem;font-weight:400;color:var(--text-muted)">(선택)</small></h2>
+                </div>
+                <div class="option-group" id="rule_group">
                     <label for="rule_none">
                         <input type="radio" name="rule" id="rule_none" value="" checked />
                         없음
@@ -75,47 +98,80 @@
                         더블크로스
                     </label>
                 </div>
+                <div class="rule-hint" id="rule_hint"></div>
             </div>
 
-            <div class="wrap col">
-                <h2>4. 커스텀 CSS 추가(선택)</h2>
-
+            <!-- 4. 커스텀 CSS -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="step-badge">4</span>
+                    <h2>커스텀 CSS <small style="font-size:1.2rem;font-weight:400;color:var(--text-muted)">(선택)</small></h2>
+                </div>
                 <textarea id="custom_css" placeholder="커스텀 CSS가 필요하다면 추가하세요. 선택자 상위에 'textchatcontainer'를 추가하는 것을 추천합니다."></textarea>
             </div>
 
-            <button type="button" id="btn_submit" class="btn" disabled>5. 변환</button>
-
-            <div class="wrap col">
-                <h2>6. 로그 수정</h2>
-
-                <div class="wrap col">
-                    <div id="result_preview_style" style="font-size: 0; width: 0; height: 0"></div>
-                    <div id="result_preview" contenteditable="true">먼저 로그를 변환해주세요.</div>
-                </div>
-
-                <label for="option_split">
-                    <input type="checkbox" id="option_split" />
-                    2페이지로 분리 (필요 시 체크)
-                </label>
-
-                <button type="button" id="btn_submit_re" class="btn" disabled>7. 재변환</button>
+            <!-- 5. 변환 -->
+            <div class="btn-row">
+                <button type="button" id="btn_submit" class="btn btn-primary" disabled>
+                    ✦ 변환하기
+                </button>
+                <button type="button" id="btn_reset" class="btn btn-ghost">
+                    초기화
+                </button>
             </div>
 
-            <div class="wrap col">
-                <h2>8. 로그 복사</h2>
-
-                <div class="wrap col">
-                    <textarea id="result"></textarea>
-                    <button type="button" id="btn_copy_result" class="btn btn-copy" disabled>8. 복사 <span></span></button>
+            <!-- 6. 로그 수정 -->
+            <div class="card card-hidden" id="card_step6">
+                <div class="card-header">
+                    <span class="step-badge">6</span>
+                    <h2>로그 수정</h2>
                 </div>
-
-                <div id="sub_result" class="wrap col">
-                    <textarea id="result2"></textarea>
-                    <button type="button" id="btn_copy_result2" class="btn btn-copy" disabled>8. 2페이지 복사 <span></span></button>
+                <div class="preview-wrap">
+                    <div id="result_preview_style" aria-hidden="true"></div>
+                    <div id="result_preview" contenteditable="true" role="textbox" aria-label="변환된 로그 미리보기 (편집 가능)"></div>
+                </div>
+                <hr class="section-divider" />
+                <div class="wrap row" style="justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                    <label for="option_split">
+                        <input type="checkbox" id="option_split" />
+                        2페이지로 분리 <span style="font-size:1.1rem;color:var(--text-muted)">(필요 시 체크)</span>
+                    </label>
+                    <button type="button" id="btn_submit_re" class="btn btn-secondary" disabled>
+                        재변환
+                    </button>
                 </div>
             </div>
 
-            <button type="button" id="btn_hide" class="btn hide">hide</button>
-        </div>
+            <!-- 7. 로그 복사 -->
+            <div class="card card-hidden" id="card_step7">
+                <div class="card-header">
+                    <span class="step-badge">7</span>
+                    <h2>로그 복사</h2>
+                </div>
+
+                <div class="result-block">
+                    <textarea id="result" readonly></textarea>
+                    <button type="button" id="btn_copy_result" class="btn btn-copy" disabled>
+                        복사 <span class="char-count" id="char_count_1"></span>
+                    </button>
+                </div>
+
+                <div id="sub_result">
+                    <div class="result-block">
+                        <textarea id="result2" readonly></textarea>
+                        <button type="button" id="btn_copy_result2" class="btn btn-copy" disabled>
+                            2페이지 복사 <span class="char-count" id="char_count_2"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.wrapper -->
+
+        <!-- 토스트 컨테이너 -->
+        <div id="toast-container" aria-live="polite"></div>
+
+        <!-- 히든 트리거 -->
+        <button type="button" id="btn_hide" class="btn-hide" aria-hidden="true" tabindex="-1">hide</button>
     </body>
 </html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 배경 -->
+  <rect width="100" height="100" rx="22" fill="#7c5cbf"/>
+
+  <!-- 외부 정삼각형 -->
+  <polygon
+    points="50,9 91,78 9,78"
+    fill="none"
+    stroke="white"
+    stroke-width="5.5"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+
+  <!-- 내부 역삼각형 (중선 삼각형) -->
+  <polygon
+    points="29.5,43.5 70.5,43.5 50,78"
+    fill="rgba(255,255,255,0.12)"
+    stroke="white"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- 세 중선 (꼭짓점 → 반대편 변 중점) -->
+  <!-- 위 꼭짓점(50,9) → 아래 변 중점(50,78) -->
+  <line x1="50" y1="9"  x2="50"   y2="78"   stroke="white" stroke-width="2.5" stroke-opacity="0.45"/>
+  <!-- 왼쪽 꼭짓점(9,78) → 오른쪽 변 중점(70.5,43.5) -->
+  <line x1="9"  y1="78" x2="70.5" y2="43.5" stroke="white" stroke-width="2.5" stroke-opacity="0.45"/>
+  <!-- 오른쪽 꼭짓점(91,78) → 왼쪽 변 중점(29.5,43.5) -->
+  <line x1="91" y1="78" x2="29.5" y2="43.5" stroke="white" stroke-width="2.5" stroke-opacity="0.45"/>
+</svg>
